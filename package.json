@@ -1,0 +1,28 @@
+{
+  "name": "git-workshop",
+  "version": "1.0.0",
+  "description": "Git rebase workshop with automated task setup scripts",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "task:1": "ts-node tasks/task1.ts",
+    "task:2": "ts-node tasks/task2.ts",
+    "task:3": "ts-node tasks/task3.ts"
+  },
+  "keywords": [
+    "git",
+    "workshop",
+    "rebase",
+    "training"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "simple-git": "^3.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
