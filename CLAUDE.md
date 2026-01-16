@@ -13,6 +13,7 @@
   - Always have a space after headings
   - Always have space around lists
   - Always specifiy a language for code blocks - use text if the content isn't actual code (ex: file structure)
+  - Always have space around code blocks as well (before and after the entire block)
 
 ## Task Script Pattern
 
@@ -24,7 +25,7 @@ Every task script follows this structure:
 4. Create operations object with `createGitOps(git, repoPath)`
 5. Compose atomic operations to build scenario
 6. Log final state (branches, commits, status)
-7. Print participant instructions
+7. Print completion message directing to Instructions.md
 
 Example:
 
@@ -34,13 +35,35 @@ import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../src';
 const force = hasFlag(CLI_FLAGS.FORCE);
 const { git, repoPath } = await initTaskRepo(1, force);
 const ops = createGitOps(git, repoPath);
+
+// ... build scenario with atomic operations ...
+
+console.log('\n✅ Task 1 setup complete!\n');
+console.log('📖 Next steps:');
+console.log('   cd task1');
+console.log('   cat Instructions.md  # (or open in your editor)\n');
 ```
+
+## Instructions.md Files
+
+- **Static files**: Create as `taskN/Instructions.md` and commit to repository
+- **Not generated**: Task scripts do NOT create or modify Instructions.md
+- **Content structure**:
+  - Overview
+  - Maybe some intro to the concept
+  - Step-by-step exercises with code examples
+  - Key takeaways and command reference
+  - Use tasks2/Instructions.md as inspiration
+- **Format**: Use clear markdown with code blocks, headings, and progressive difficulty
+- **Purpose**: Separate setup automation (TypeScript) from learning content (Markdown)
 
 ## Operation Composition
 
 - Keep operations atomic (writeFile, addAll, commit are separate)
 - Compose operations in task scripts rather than creating combined helpers
 - This gives maximum flexibility for different scenarios
+- **Important**: Place all generated sample files in `_sample/` directory to keep task repository root clean
+- The `writeFile` operation automatically creates parent directories as needed
 
 ## Logging Style
 
@@ -49,21 +72,24 @@ const ops = createGitOps(git, repoPath);
   - ✅ Success/completion
   - ❌ Errors
   - 📊 Repository state
-  - 📚 Instructions
+  - 📖 Directing to Instructions.md
   - ✓ Individual operation success
   - 🗑️ Cleanup/deletion
   - 📁 Directory creation
-  - 🎯 Git initialization
+  - 🌲 Git initialization
   - ⚠️ Warnings/expected conflicts
 - Log each operation completion for transparency
-- End task scripts with clear numbered participant instructions
+- End task scripts with brief completion message and Instructions.md reference
+- Do NOT print step-by-step participant instructions in terminal output
 
 ## Git Configuration
 
 - Default user.name: "Rebase Wizard 🧙"
-- Default user.email: "<merge-conflicts-begone@git-workshop.dev>"
+- Default user.email: rebase.the.blue@middleearth.com
+.dev>"
 - Default branch: main
 - Repositories live in root-level task*/ directories
+- All sample files are placed in `_sample/` subdirectory
 
 ## Error Handling
 
@@ -81,8 +107,13 @@ const ops = createGitOps(git, repoPath);
   - `constants.ts` - CLI_FLAGS and other constants
   - `types.ts` - TypeScript interfaces and types
 - Task scripts: `tasks/` (root level, not in src/)
-- Task repositories: `task*/` (gitignored, created by scripts)
-- Documentation: `docs/`
+- Task repositories: `task*/` (gitignored, generated directories)
+  - Each contains `.git/` directory
+  - Each contains `Instructions.md` (static file, committed to repo)
+- Documentation:
+  - `README.md` - Participant-facing entry point
+  - `docs/WORKSHOP_CONTEXT.md` - Architecture and development context
+  - `CLAUDE.md` - Development patterns and conventions
 
 ## npm Scripts
 

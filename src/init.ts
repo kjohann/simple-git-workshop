@@ -1,8 +1,9 @@
 import simpleGit from 'simple-git';
 import { existsSync } from 'fs';
-import { rm, mkdir } from 'fs/promises';
-import { resolve } from 'path';
+import { rm, mkdir, readdir } from 'fs/promises';
+import { resolve, join } from 'path';
 import { TaskRepoResult, GitUserConfig } from './types';
+import { INSTRUCTIONS_FILE_NAME } from './constants';
 
 /**
  * Default git user configuration for workshop
@@ -18,18 +19,23 @@ const DEFAULT_GIT_USER: GitUserConfig = {
  * 
  * @param taskNumber - The task number (creates taskN/ directory)
  * @param force - If true, wipes existing directory; if false, throws error if exists
+ * @param preserveFiles - Array of filenames to preserve when force is true (default: [INSTRUCTIONS_FILE_NAME])
  * @returns Git instance and repository path
  * @throws Error if directory exists and force is false
  */
 export async function initTaskRepo(
   taskNumber: number,
-  force: boolean = false
+  force: boolean = false,
+  preserveFiles: string[] = [INSTRUCTIONS_FILE_NAME]
 ): Promise<TaskRepoResult> {
   const taskDir = `task${taskNumber}`;
   const repoPath = resolve(process.cwd(), taskDir);
+  const gitPath = join(repoPath, '.git');
 
-  // Check if directory exists
-  if (existsSync(repoPath)) {
+  // Check if git repository already exists
+  const gitExists = existsSync(gitPath);
+
+  if (gitExists) {
     if (!force) {
       throw new Error(
         `\n❌ Task repository already exists: ${taskDir}/\n\n` +
@@ -39,14 +45,29 @@ export async function initTaskRepo(
       );
     }
 
-    // Force flag present - wipe everything
-    console.log(`🗑️  Removing existing ${taskDir}/...`);
-    await rm(repoPath, { recursive: true, force: true });
+    // Force flag present - only delete .git and files that aren't preserved
+    console.log(`🗑️  Removing git repository and generated files from ${taskDir}/...`);
+
+    // Delete .git directory
+    await rm(gitPath, { recursive: true, force: true });
+
+    // Delete all files except preserved ones
+    const dirExists = existsSync(repoPath);
+    if (dirExists) {
+      const entries = await readdir(repoPath);
+      for (const entry of entries) {
+        if (!preserveFiles.includes(entry)) {
+          await rm(join(repoPath, entry), { recursive: true, force: true });
+        }
+      }
+    }
   }
 
-  // Create fresh directory
-  console.log(`📁 Creating ${taskDir}/...`);
-  await mkdir(repoPath, { recursive: true });
+  // Ensure directory exists
+  if (!existsSync(repoPath)) {
+    console.log(`📁 Creating ${taskDir}/...`);
+    await mkdir(repoPath, { recursive: true });
+  }
 
   // Initialize git repository
   console.log(`🎯 Initializing git repository...`);

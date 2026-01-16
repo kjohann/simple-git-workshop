@@ -6,8 +6,7 @@
   "scripts": {
     "build": "tsc",
     "task:1": "ts-node tasks/task1.ts",
-    "task:2": "ts-node tasks/task2.ts",
-    "task:3": "ts-node tasks/task3.ts"
+    "task:2": "ts-node tasks/task2.ts"
   },
   "keywords": [
     "git",

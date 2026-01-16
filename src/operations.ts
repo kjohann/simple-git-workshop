@@ -1,6 +1,6 @@
 import { SimpleGit } from 'simple-git';
-import { writeFile, readFile, unlink, access, rm } from 'fs/promises';
-import { join } from 'path';
+import { writeFile, readFile, unlink, access, rm, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
 import { GitOps } from './types';
 
 /**
@@ -44,6 +44,8 @@ export function createGitOps(git: SimpleGit, repoPath: string): GitOps {
 
     async writeFile(relativePath: string, content: string): Promise<void> {
       const fullPath = join(repoPath, relativePath);
+      const dir = dirname(fullPath);
+      await mkdir(dir, { recursive: true });
       await writeFile(fullPath, content, 'utf-8');
       console.log(`✓ Created/updated file: ${relativePath}`);
     },
