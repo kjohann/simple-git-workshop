@@ -5,7 +5,9 @@ node_modules/
 dist/
 
 # Task repositories (created by setup scripts)
-task*/
+# Ignore all generated content but keep Instructions.md files
+/task*/*
+!/task*/Instructions.md
 
 # IDE
 .vscode/

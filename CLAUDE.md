@@ -19,7 +19,7 @@
 
 Every task script follows this structure:
 
-1. Import from `../src` (index.ts is implicit entry point)
+1. Import from `../../` (index.ts is implicit entry point)
 2. Parse force flag with `hasFlag(CLI_FLAGS.FORCE)`
 3. Initialize repo with `initTaskRepo(taskNumber, force)`
 4. Create operations object with `createGitOps(git, repoPath)`
@@ -30,7 +30,7 @@ Every task script follows this structure:
 Example:
 
 ```typescript
-import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../src';
+import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../../';
 
 const force = hasFlag(CLI_FLAGS.FORCE);
 const { git, repoPath } = await initTaskRepo(1, force);
@@ -106,7 +106,8 @@ console.log('   cat Instructions.md  # (or open in your editor)\n');
   - `utils.ts` - hasFlag(), getTaskPath() utilities
   - `constants.ts` - CLI_FLAGS and other constants
   - `types.ts` - TypeScript interfaces and types
-- Task scripts: `tasks/` (root level, not in src/)
+  - `tasks/` - Task setup scripts
+    - `taskN/index.ts` - Individual task setup scripts
 - Task repositories: `task*/` (gitignored, generated directories)
   - Each contains `.git/` directory
   - Each contains `Instructions.md` (static file, committed to repo)

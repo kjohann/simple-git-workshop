@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "task:1": "ts-node tasks/task1.ts",
-    "task:2": "ts-node tasks/task2.ts"
+    "task:1": "ts-node src/tasks/task1",
+    "task:2": "ts-node src/tasks/task2"
   },
   "keywords": [
     "git",
