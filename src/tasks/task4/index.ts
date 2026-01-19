@@ -4,14 +4,18 @@ const TASK_NUMBER = 4;
 const TASK_PATH = getTaskPath(TASK_NUMBER);
 
 async function setupTask4() {
-  console.log('🚀 Setting up Task 4: Interactive Rebase Basics\n');
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+  if (!clean) {
+    console.log('🚀 Setting up Task 4: Interactive Rebase Basics\n');
+  }
 
   // Initialize repository
   const filesToPreserve = ['Instructions.md'];
   const { git, repoPath } = await initTaskRepo(
     TASK_NUMBER,
     hasFlag(CLI_FLAGS.FORCE),
-    filesToPreserve
+    filesToPreserve,
+    hasFlag(CLI_FLAGS.CLEAN)
   );
 
   const ops = createGitOps(git, repoPath);

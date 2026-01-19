@@ -11,13 +11,16 @@ import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../..';
  * - Test git log commands and formatting
  */
 async function main() {
-  console.log('🚀 Setting up Task 1: Git Configuration & Setup\n');
-
   // Parse command-line flags
   const force = hasFlag(CLI_FLAGS.FORCE);
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+
+  if (!clean) {
+    console.log('🚀 Setting up Task 1: Git Configuration & Setup\n');
+  }
 
   // Initialize task repository
-  const { git, repoPath } = await initTaskRepo(1, force);
+  const { git, repoPath } = await initTaskRepo(1, force, ['Instructions.md'], clean);
   const ops = createGitOps(git, repoPath);
 
   // Create initial commits on main

@@ -40,14 +40,18 @@ const TASK_NUMBER = 6;
  *                            B1'---B2'  featureB
  */
 async function setupTask6() {
-  console.log('🚀 Setting up Task 6: Rebase --onto - Surgical Branch Transplanting\n');
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+  if (!clean) {
+    console.log('🚀 Setting up Task 6: Rebase --onto - Surgical Branch Transplanting\n');
+  }
 
   // Initialize repository
   const filesToPreserve = ['Instructions.md'];
   const { git, repoPath } = await initTaskRepo(
     TASK_NUMBER,
     hasFlag(CLI_FLAGS.FORCE),
-    filesToPreserve
+    filesToPreserve,
+    hasFlag(CLI_FLAGS.CLEAN)
   );
 
   const ops = createGitOps(git, repoPath);

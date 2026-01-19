@@ -20,17 +20,48 @@ const DEFAULT_GIT_USER: GitUserConfig = {
  * @param taskNumber - The task number (creates taskN/ directory)
  * @param force - If true, wipes existing directory; if false, throws error if exists
  * @param preserveFiles - Array of filenames to preserve when force is true (default: [INSTRUCTIONS_FILE_NAME])
- * @returns Git instance and repository path
+ * @param cleanOnly - If true, only clean the directory and exit without recreating
+ * @returns Git instance and repository path (or null if cleanOnly)
  * @throws Error if directory exists and force is false
  */
 export async function initTaskRepo(
   taskNumber: number,
   force: boolean = false,
-  preserveFiles: string[] = [INSTRUCTIONS_FILE_NAME]
+  preserveFiles: string[] = [INSTRUCTIONS_FILE_NAME],
+  cleanOnly: boolean = false
 ): Promise<TaskRepoResult> {
   const taskDir = `task${taskNumber}`;
   const repoPath = resolve(process.cwd(), taskDir);
   const gitPath = join(repoPath, '.git');
+
+  // Handle --clean flag: remove files and exit
+  if (cleanOnly) {
+    const dirExists = existsSync(repoPath);
+    if (!dirExists) {
+      console.log(`✅ Nothing to clean: ${taskDir}/ does not exist.\n`);
+      process.exit(0);
+    }
+
+    console.log(`🧹 Cleaning ${taskDir}/...`);
+
+    // Delete .git directory if it exists
+    if (existsSync(gitPath)) {
+      await rm(gitPath, { recursive: true, force: true });
+    }
+
+    // Delete all files except preserved ones
+    const entries = await readdir(repoPath);
+    let cleanedCount = 0;
+    for (const entry of entries) {
+      if (!preserveFiles.includes(entry)) {
+        await rm(join(repoPath, entry), { recursive: true, force: true });
+        cleanedCount++;
+      }
+    }
+
+    console.log(`✅ Cleaned ${taskDir}/ (removed ${cleanedCount} items, preserved: ${preserveFiles.join(', ')})\n`);
+    process.exit(0);
+  }
 
   // Check if git repository already exists
   const gitExists = existsSync(gitPath);

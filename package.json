@@ -10,7 +10,8 @@
     "task:3": "ts-node src/tasks/task3",
     "task:4": "ts-node src/tasks/task4",
     "task:5": "ts-node src/tasks/task5",
-    "task:6": "ts-node src/tasks/task6"
+    "task:6": "ts-node src/tasks/task6",
+    "cleanAll": "ts-node src/cleanAll"
   },
   "keywords": [
     "git",

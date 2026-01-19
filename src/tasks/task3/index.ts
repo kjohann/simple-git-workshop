@@ -10,13 +10,16 @@ import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../..';
  * - They'll learn about git rebase --abort and rerere
  */
 async function main() {
-  console.log('🚀 Setting up Task 3: Merge Conflicts and Rerere\n');
-
   // Parse command-line flags
   const force = hasFlag(CLI_FLAGS.FORCE);
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+
+  if (!clean) {
+    console.log('🚀 Setting up Task 3: Merge Conflicts and Rerere\n');
+  }
 
   // Initialize task repository
-  const { git, repoPath } = await initTaskRepo(3, force);
+  const { git, repoPath } = await initTaskRepo(3, force, ['Instructions.md'], clean);
   const ops = createGitOps(git, repoPath);
 
   // Create initial commits on main

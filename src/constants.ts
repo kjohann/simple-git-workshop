@@ -3,6 +3,7 @@
  */
 export const CLI_FLAGS = {
   FORCE: '--force',
+  CLEAN: '--clean',
 } as const;
 
 /**

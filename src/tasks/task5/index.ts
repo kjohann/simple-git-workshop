@@ -22,14 +22,18 @@ const TASK_NUMBER = 5;
  *   4. Fixed unrelated bug
  */
 async function setupTask5() {
-  console.log('🚀 Setting up Task 5: Interactive Rebase - Reordering and Removing Commits\n');
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+  if (!clean) {
+    console.log('🚀 Setting up Task 5: Interactive Rebase - Reordering and Removing Commits\n');
+  }
 
   // Initialize repository
   const filesToPreserve = ['Instructions.md'];
   const { git, repoPath } = await initTaskRepo(
     TASK_NUMBER,
     hasFlag(CLI_FLAGS.FORCE),
-    filesToPreserve
+    filesToPreserve,
+    hasFlag(CLI_FLAGS.CLEAN)
   );
 
   const ops = createGitOps(git, repoPath);

@@ -11,13 +11,16 @@ import { initTaskRepo, createGitOps, hasFlag, CLI_FLAGS } from '../..';
  * - The participant will practice rebasing feature onto main (fast-forward)
  */
 async function main() {
-  console.log('🚀 Setting up Task 2: Simple Fast-Forward Rebase\n');
-
   // Parse command-line flags
   const force = hasFlag(CLI_FLAGS.FORCE);
+  const clean = hasFlag(CLI_FLAGS.CLEAN);
+
+  if (!clean) {
+    console.log('🚀 Setting up Task 2: Simple Fast-Forward Rebase\n');
+  }
 
   // Initialize task repository
-  const { git, repoPath } = await initTaskRepo(2, force);
+  const { git, repoPath } = await initTaskRepo(2, force, ['Instructions.md'], clean);
   const ops = createGitOps(git, repoPath);
 
   // Create initial commit on main
