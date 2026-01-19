@@ -162,6 +162,41 @@ git-workshop/
 **Generated Files**: All sample files created in `_sample/` directory
 **Status**: ✅ Complete
 
+### Task 4: Interactive Rebase Basics
+
+**File**: `src/tasks/task4/index.ts`
+**Instructions**: `task4/Instructions.md` (static file)
+**Scenario**: Feature branch with 6 commits that need cleanup using fixup, reword, and squash
+**Learning Focus**:
+
+- Introduction to interactive rebase (`git rebase -i`)
+- Using `fixup` to combine commits
+- Using `reword` to edit commit messages
+- Using `squash` to combine commits with merged messages
+**Generated Files**: All sample files created in `_sample/` directory
+**Status**: ✅ Complete
+
+### Task 5: Interactive Rebase - Reordering and Removing Commits
+
+**File**: `src/tasks/task5/index.ts`
+**Instructions**: `task5/Instructions.md` (static file)
+**Scenario**: Feature branch with 6 commits implementing user CRUD; history has misplaced commits and junk that needs cleanup
+**Learning Focus**:
+
+- Dropping unwanted commits using `drop` or line deletion
+- Reordering commits by changing line order
+- Combining reorder with fixup operations
+- Understanding commit dependencies when reordering
+- Planning complex interactive rebases
+**Workflow**:
+- Drop experimental commit ("Trying out something")
+- Move fixup commit after its target and apply as fixup
+- Move misplaced commit to end of history
+- Verify final clean history
+
+**Generated Files**: All sample files created in `_sample/` directory
+**Status**: ✅ Complete
+
 ## Development Workflow
 
 ### Creating New Tasks

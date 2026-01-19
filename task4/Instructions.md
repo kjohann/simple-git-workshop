@@ -3,7 +3,7 @@
 Learn how to clean up commit history using interactive rebase to reword messages, apply fixups, and squash related commits.
 
 ```text
-ℹ️ Remember to initialize the task before proceeding by running npm run task:3 from the workshop root
+ℹ️ Remember to initialize the task before proceeding by running npm run task:4 from the workshop root
 ```
 
 ## Overview
