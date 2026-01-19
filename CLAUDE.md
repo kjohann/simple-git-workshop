@@ -10,10 +10,10 @@
 - Use 2-space indentation
 - Prefer explicit types over inference for public APIs
 - When editing markdown files:
-  - Always have a space after headings
-  - Always have space around lists
+  - Always have a new line after headings
+  - Always have new line around lists
   - Always specifiy a language for code blocks - use text if the content isn't actual code (ex: file structure)
-  - Always have space around code blocks as well (before and after the entire block)
+  - Always have new line around code blocks as well (before and after the entire block)
 
 ## Task Script Pattern
 

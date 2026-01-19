@@ -7,7 +7,8 @@
     "build": "tsc",
     "task:1": "ts-node src/tasks/task1",
     "task:2": "ts-node src/tasks/task2",
-    "task:3": "ts-node src/tasks/task3"
+    "task:3": "ts-node src/tasks/task3",
+    "task:4": "ts-node src/tasks/task4"
   },
   "keywords": [
     "git",
