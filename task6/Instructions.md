@@ -8,7 +8,7 @@ Learn how to use `git rebase --onto` to move commits from one base to another, a
 
 ## Overview
 
-This task repository demonstrates a common scenario:
+This task repository demonstrates a common scenario, and should be set up like this:
 
 - `main` branch with project setup
 - `featureA` branch that was created from main with 3 commits
@@ -33,7 +33,7 @@ FeatureA has been rebased onto main's new commits (M3, M4):
 ```text
           B1---B2  featureB (still pointing to OLD A2!)
          /
-    A1---A2---A3  (orphaned - old featureA commits)
+    A1---A2---A3  (orphaned - old featureA commits - these now only "live" on branch featureB)
    /
 M1---M2---M3---M4  main
               \
@@ -78,14 +78,14 @@ This command means: "Take the commits in `<branch>` that come **after** `<old-ba
 
 ```text
 Before:
-      X---Y---Z  topic (we want to move Y and Z)
+      X---Y---Z  feature1 (we want to move Y and Z)
      /
 A---B---C  main
 
-Command: git rebase --onto C X topic
+Command: git rebase --onto C X feature1
 
 After:
-          Y'---Z'  topic
+          Y'---Z'  feature1
          /
 A---B---C  main
 ```
@@ -115,18 +115,18 @@ git log --oneline --graph --all
 You should see something like:
 
 ```text
-* abc1234 (featureB) B2: Add user preferences feature
-* def5678 B1: Add settings module
-* 111aaaa A2: Add API error handling
-* 222bbbb A1: Add API module
-| * 333cccc (featureA) A3: Add API documentation
-| * 444dddd A2: Add API error handling
-| * 555eeee A1: Add API module
+* 1f018bb (featureA) A3: Add API documentation
+* 751fba4 A2: Add API error handling
+* fdb8792 A1: Add API module
+* cd52f43 (main) M4: Add project documentation
+* 84ea6b7 M3: Add configuration module
+| * f18c2cb (HEAD -> featureB) B2: Add user preferences feature
+| * eb708c1 B1: Add settings module
+| * 74763fc A2: Add API error handling
+| * 3836e17 A1: Add API module
 |/
-* 666ffff (main) M4: Add project documentation
-* 777gggg M3: Add configuration module
-* 888hhhh M2: Add utility functions
-* 999iiii M1: Initial project setup
+* 1458a0d M2: Add utility functions
+* 58e8e51 M1: Initial project setup
 ```
 
 Notice how featureB's parent commits (111aaaa, 222bbbb) are **different** from featureA's commits (444dddd, 555eeee) even though they have the same messages. These are the orphaned commits!
@@ -227,6 +227,7 @@ If you know exactly how many commits to move, you can use relative references:
 
 ```bash
 # "Take the last 2 commits of featureB and put them on featureA"
+# Note, requires you to be on the featureB branch when running
 git rebase --onto featureA HEAD~2 featureB
 ```
 

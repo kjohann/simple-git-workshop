@@ -8,7 +8,7 @@ This task will ease you into the world of rebasing by simply introducing you to 
 
 ## Overview
 
-This repository has been set up with the following structure:
+This repository in this folder should be set up with the following structure:
 
 - **main branch**: Has evolved with 5 commits (config, README updates, utils module)
 - **feature/add-calculator branch**: Was created early and has 2 commits (calculator implementation and tests)
@@ -53,15 +53,17 @@ git lg --all
 You should see something like this (hashes will be different):
 
 ```text
-* 7a8b9c0 (HEAD -> main) Update config to version 1.1.0
-* 6d7e8f9 Add utils module
-* 5c6d7e8 Update README with features section
-| * 4b5c6d7 (feature/add-calculator) Add tests for calculator
-| * 3a4b5c6 Add calculator with add function
+* 43b8429 (HEAD -> main) Update config to version 1.1.0
+* f978989 Add utils module
+* 02798f1 Update README with features section
+| * 7eac275 (feature/add-calculator) Add tests for calculator
+| * e4fc448 Add calculator with add function
 |/
-* 2a3b4c5 Add config file
-* 1a2b3c4 Initial commit
+* 4f037c0 Add config file
+* 8d54af2 Initial commit
 ```
+
+**Note**: The graph might show the branches in opposite positions (feature on the left, main on the right) depending on commit timing during setup. The important thing is seeing the divergence at the "Add config file" commit.
 
 Notice how the feature branch diverged from main at an earlier commit.
 

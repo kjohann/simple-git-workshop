@@ -8,7 +8,7 @@ Learn how to clean up commit history by reordering commits and removing unwanted
 
 ## Overview
 
-This task repository contains:
+This task repository should contain:
 
 - `main` branch with 1 commit (initial project setup)
 - `feature/user-crud` branch with 6 commits implementing user CRUD operations
@@ -50,7 +50,7 @@ Sometimes commits slip into your branch that shouldn't be there:
 - Work-in-progress commits that are now obsolete
 - Commits that duplicate work done elsewhere
 
-Using `drop` lets you remove these cleanly, as if they never happened. OR you can just delete the line from the rebase script.
+Using `drop` lets you remove these cleanly, as if they never happened. *OR* you can just delete the line from the rebase script.
 
 ### Reordering Commits
 
@@ -109,35 +109,38 @@ Start an interactive rebase for all 6 commits since main:
 git rebase -i main
 ```
 
-Your editor will open with:
+Your editor will open with (line numbers added for better readability):
+
+**NOTE: Don't copy paste this - your hashes will be different, so it will not work!**
 
 ```text
-pick a1b2c3d Implement user creation logic
-pick b2c3d4e Implement user edit logic
-pick c3d4e5f Fixed unrelated bug
-pick d4e5f6g Implement user deletion logic
-pick e5f6g7h Trying out something
-pick f6g7h8i Fixup: tests for user creation logic
+1. pick a1b2c3d Implement user creation logic
+2. pick b2c3d4e Implement user edit logic
+3. pick c3d4e5f Fixed unrelated bug
+4. pick d4e5f6g Implement user deletion logic
+5. pick e5f6g7h Trying out something
+6. pick f6g7h8i Fixup: tests for user creation logic
 ```
 
 ### Step 4: Apply All Changes at Once
 
-Now we'll make all three changes in a single rebase. Edit the file to look like this:
+Now we'll make all three changes in a single rebase. Edit the file to look like this (:warning: **Again: don't copy paste this**):
 
 ```text
 pick a1b2c3d Implement user creation logic
-fixup f6g7h8i Fixup: tests for user creation logic
+fixup 2ddb4e5 Fixup: tests for user creation logic
 pick b2c3d4e Implement user edit logic
 pick d4e5f6g Implement user deletion logic
+drop d17a13d Trying out something
 pick c3d4e5f Fixed unrelated bug
 ```
 
 **What we changed:**
 
 1. **Moved line 6** (fixup commit) to right after line 1, and changed `pick` to `fixup`
-2. **Deleted line 5** (trying out something) - this drops that commit entirely
+2. **Chose 'drop' line 5** (trying out something) - this drops that commit entirely
 3. **Moved line 3** (Fixed unrelated bug) to be the last line
-4. **Line 4** (deletion logic) moved up to fill the gap
+4. **Line 4** (deletion logic) has stayed in place
 
 **Important notes:**
 
@@ -146,6 +149,8 @@ pick c3d4e5f Fixed unrelated bug
 - To drop a commit, simply delete its line (or change `pick` to `drop`)
 
 Save and close the editor.
+
+ℹ️ Feel free to try this task again and delete the line that should be dropped instead of writing `drop` - what do you like best?
 
 ### Step 5: Verify the Result
 
@@ -261,7 +266,7 @@ If you make a mistake during rebase:
 git rebase --abort
 ```
 
-If you already completed the rebase but want to undo it:
+If you already completed the rebase but want to undo it (the final safety net):
 
 ```bash
 # Find the commit before the rebase

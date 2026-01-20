@@ -8,7 +8,7 @@ Learn how to clean up commit history using interactive rebase to reword messages
 
 ## Overview
 
-This task repository contains:
+This task repository should contain:
 
 - `main` branch with 2 commits (initial project setup)
 - `feature/user-validation` branch with 6 commits that need cleaning:
@@ -24,14 +24,14 @@ Interactive rebase (`git rebase -i`) lets you edit, reorder, combine, or remove 
 
 When you start an interactive rebase, Git opens your editor with a list of commits and commands you can apply to each one:
 
-- `pick` - Keep the commit as-is (default)
-- `reword` - Keep the commit but edit its message
-- `edit` - Pause to amend the commit's content
-- `squash` - Combine with previous commit, keep both messages
-- `fixup` - Combine with previous commit, discard this message
-- `drop` - Remove the commit entirely
+- `pick`/`p` - Keep the commit as-is (default)
+- `reword`/`r` - Keep the commit but edit its message
+- `edit`/`e` - Pause to amend the commit's content
+- `squash`/`s` - Combine with previous commit, keep both messages
+- `fixup`/`f` - Combine with previous commit, discard this message
+- `drop`/`d` - Remove the commit entirely
 
-**Important**: Interactive rebase rewrites history. Only do this on commits you haven't pushed yet, or on branches only you are working on.
+:warning: Interactive rebase rewrites history. Only do this on commits you haven't pushed yet, or on branches only you are working on.
 
 ## Step-by-Step Exercise
 
@@ -48,7 +48,7 @@ You should see something like:
 ```text
 f6g7h8i (HEAD -> feature/user-validation) Add test that uses username validator when creating profile
 e5f6g7h Add tests for creating profile
-d4e5f6g Add new profile function
+d4e5f6g Adding feature: creating profile
 c3d4e5f This needs rewording: Support phone
 b2c3d4e Fixup: forgot email validation
 a1b2c3d Add username validation function
@@ -93,7 +93,7 @@ Your editor will open with:
 pick a1b2c3d Add username validation function
 pick b2c3d4e Fixup: forgot email validation
 pick c3d4e5f This needs rewording: Support phone
-pick d4e5f6g Add new profile function
+pick d4e5f6g Adding feature: creating profile
 pick e5f6g7h Add tests for creating profile
 pick f6g7h8i Add test that uses username validator when creating profile
 ```
@@ -104,7 +104,7 @@ Change the second line to use `fixup` or `f`:
 pick a1b2c3d Add username validation function
 fixup b2c3d4e Fixup: forgot email validation
 pick c3d4e5f This needs rewording: Support phone
-pick d4e5f6g Add new profile function
+pick d4e5f6g Adding feature: creating profile
 pick e5f6g7h Add tests for creating profile
 pick f6g7h8i Add test that uses username validator when creating profile
 ```
@@ -143,21 +143,19 @@ git rebase -i HEAD~4
 Your editor shows the remaining commits:
 
 ```text
-pick a1b2c3d Add username validation function
-pick c3d4e5f This needs rewording: Support phone
-pick d4e5f6g Add new profile function
-pick e5f6g7h Add tests for creating profile
-pick f6g7h8i Add test that uses username validator when creating profile
+pick 5e0722c # This needs rewording: Support phone
+pick 67b8c9a # Adding feature: creating profile
+pick 4fd9547 # Add tests for creating profile
+pick b2a33a3 # Add test that uses username validator when creating profile
 ```
 
 Change the second line to use `reword` or `r`:
 
 ```text
-pick a1b2c3d Add username validation function
-reword c3d4e5f This needs rewording: Support phone
-pick d4e5f6g Add new profile function
-pick e5f6g7h Add tests for creating profile
-pick f6g7h8i Add test that uses username validator when creating profile
+reword 5e0722c # This needs rewording: Support phone
+pick 67b8c9a # Adding feature: creating profile
+pick 4fd9547 # Add tests for creating profile
+pick b2a33a3 # Add test that uses username validator when creating profile
 ```
 
 Save and close. Git will open another editor for you to rewrite the commit message. Replace it with:
@@ -183,7 +181,7 @@ git rebase -i HEAD~3
 Your editor shows:
 
 ```text
-pick d4e5f6g Add new profile function
+pick d4e5f6g Adding feature: creating profile
 pick e5f6g7h Add tests for creating profile
 pick f6g7h8i Add test that uses username validator when creating profile
 ```
@@ -191,7 +189,7 @@ pick f6g7h8i Add test that uses username validator when creating profile
 We want to keep the first commit and squash the other two into it - use `squash` or `s` on the other two:
 
 ```text
-pick d4e5f6g Add new profile function
+pick d4e5f6g Adding feature: creating profile
 squash e5f6g7h Add tests for creating profile
 squash f6g7h8i Add test that uses username validator when creating profile
 ```
@@ -202,7 +200,7 @@ Save and close. Git will open another editor showing all three commit messages:
 # This is a combination of 3 commits.
 # This is the 1st commit message:
 
-Add new profile function
+Adding feature: creating profile
 
 # This is the commit message #2:
 
@@ -248,7 +246,7 @@ Perfect! You've transformed 6 messy commits into 3 polished ones.
 ```text
 * Add test that uses username validator when creating profile
 * Add tests for creating profile
-* Add new profile function
+* Adding feature: creating profile
 * This needs rewording: Support phone
 * Fixup: forgot email validation
 * Add username validation function

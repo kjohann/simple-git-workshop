@@ -5,13 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "task:1": "ts-node src/tasks/task1",
-    "task:2": "ts-node src/tasks/task2",
-    "task:3": "ts-node src/tasks/task3",
-    "task:4": "ts-node src/tasks/task4",
-    "task:5": "ts-node src/tasks/task5",
-    "task:6": "ts-node src/tasks/task6",
-    "cleanAll": "ts-node src/cleanAll"
+    "task:1": "tsx src/tasks/task1",
+    "task:2": "tsx src/tasks/task2",
+    "task:3": "tsx src/tasks/task3",
+    "task:4": "tsx src/tasks/task4",
+    "task:5": "tsx src/tasks/task5",
+    "task:6": "tsx src/tasks/task6",
+    "cleanAll": "tsx src/cleanAll"
   },
   "keywords": [
     "git",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.3.3"
   }
 }

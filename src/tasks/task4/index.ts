@@ -228,8 +228,8 @@ module.exports = {
 `
   );
   await ops.addAll();
-  await ops.commit('Add new profile function');
-  console.log('✓ Commit 4: Add new profile function');
+  await ops.commit('Adding feature: creating profile');
+  console.log('✓ Commit 4: Adding feature: creating profile');
 
   // Feature commit 5: Add tests for creating profile
   await ops.writeFile(

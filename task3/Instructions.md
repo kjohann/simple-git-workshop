@@ -8,12 +8,18 @@ This task introduces you to handling merge conflicts during rebasing and teaches
 
 ## Overview
 
-This repository has been set up with the following structure:
+This repository should be set up with the following structure:
 
 - **main branch**: Has 4 commits with changes to README and tasks.js
 - **feature/enhance-tasks branch**: Was created early and has 2 commits that conflict with main
 
 The feature branch modifies the same lines in both commits, creating a total of 4 conflicts (2 per commit) when rebasing.
+
+:warning: If you already have rerere enabled in your global git config, you should either disable it or set it to false in the local git config within the task3 repo:
+
+**NOTE:** If you simply set it to false in the local git config, remember to omit the `--global` flag when running the `git config` instructions below.
+
+`git config --global rerere.enabled false`
 
 ## What is Rerere?
 
@@ -62,14 +68,16 @@ git lg --all
 You should see divergent branches:
 
 ```text
-* a1b2c3d (feature/enhance-tasks) Enhance descriptions and priority
-* b2c3d4e Update branding and default status
-| * c3d4e5f (HEAD -> main) Update descriptions and set priority to LOW
-| * d4e5f6g Rebrand to Task Tracker and update status
+* 426f4d3 (main) Update descriptions and set priority to LOW
+* 7734305 Rebrand to Task Tracker and update status
+| * 466b74d (HEAD -> feature/enhance-tasks) Enhance descriptions and priority
+| * d196dcd Update branding and default status
 |/
-* e5f6g7h Add task creation function
-* f6g7h8i Initial commit
+* 03b7514 Add task creation function
+* e3d040f Initial commit
 ```
+
+**Note**: The graph might show the branches in opposite positions (feature on the left, main on the right) depending on commit timing during setup.
 
 ### Step 2: Examine the Files
 
@@ -119,6 +127,8 @@ CONFLICT (content): Merge conflict in _sample/tasks.js
 ### Step 4: Resolve the First Two Conflicts
 
 :warning: It is highly recommended that you use an editor you're comfortable with for resolving conflicts. If you use VSCode or similar, you don't need to type `git mergetool` - just open the task folder in the editor, and you should see the repo files, conflicts and all in the Source Control pane.
+
+Alternatively, if you're a super duper terminal wizard, do this and run `git mergetool` to resolve conflicts in the terminal instead:
 
 ```bash
 # See which files have conflicts
@@ -204,10 +214,10 @@ Now enable rerere and see the magic:
 
 ```bash
 # Enable rerere
-git config rerere.enabled true
+git config --global rerere.enabled true
 
 # Verify it's enabled
-git config rerere.enabled
+git config --global rerere.enabled
 ```
 
 Start the rebase again:
@@ -315,11 +325,11 @@ For the purpose of this exercise you can choose wheter or not to complete the re
 
 ```bash
 # Enable/disable rerere
-git config rerere.enabled true
-git config rerere.enabled false
+git config --global rerere.enabled true
+git config --global rerere.enabled false
 
 # Check rerere status
-git config rerere.enabled
+git config --global rerere.enabled
 
 # Work with the rerere cache
 git rerere forget <path>
